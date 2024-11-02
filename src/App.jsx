@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 // 1. Імпортуємо HTTP-функцію
 import { fetchArticlesWithTopic } from "./articles-api.js";
+import { SearchForm } from "./components/SearchForm.jsx"
 import PacmanLoader from "react-spinners/PacmanLoader";
 import './App.css'
 
@@ -22,28 +23,25 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  useEffect(() => {
-    async function fetchArticles() {
-      try {
-        setLoading(true);
-		// 2. Використовуємо HTTP-функцію
-		const data = await fetchArticlesWithTopic("react");
-        setArticles(data);
-      } catch (error) {
-        console.log(error);
-        
-        setError(true);
-      } finally {
-        setLoading(false);
-      }
+	const handleSearch = async (topic) => {
+    try {
+	  setArticles([]);
+	  setError(false);
+      setLoading(true);
+      const data = await fetchArticlesWithTopic(topic);
+      setArticles(data);
+    } catch (error) {
+      console.log(error);
+      
+      setError(true);
+    } finally {
+      setLoading(false);
     }
-
-    fetchArticles();
-  }, []);
+  };
 
   return (
     <div>
-      <h1>Latest articles</h1>
+      <SearchForm onSearch={handleSearch} />
       {/* {loading && <p>Loading data, please wait...</p>} */}
       {loading && <PacmanLoader color="#3b19e3"cssOverride={{display: "inline-flex"}}/>}
       {error && (
