@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react';
-import axios from "axios";
+// 1. Імпортуємо HTTP-функцію
+import { fetchArticlesWithTopic } from "./articles-api.js";
 import PacmanLoader from "react-spinners/PacmanLoader";
 import './App.css'
 
@@ -25,14 +26,12 @@ const App = () => {
     async function fetchArticles() {
       try {
         setLoading(true);
-        const response = await axios.get(
-          "https://hn.algolia.com/api/v1/search?query=react"
-        );
-        setArticles(response.data.hits);
+		// 2. Використовуємо HTTP-функцію
+		const data = await fetchArticlesWithTopic("react");
+        setArticles(data);
       } catch (error) {
         console.log(error);
         
-				// Встановлюємо стан error в true
         setError(true);
       } finally {
         setLoading(false);
