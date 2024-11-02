@@ -44,11 +44,9 @@ const App = () => {
 
   return (
     <div>
-      <PacmanLoader color="#3b19e3"/>
-      <p>text</p>
       <h1>Latest articles</h1>
       {/* {loading && <p>Loading data, please wait...</p>} */}
-      {loading && <PacmanLoader color="#3b19e3"/>}
+      {loading && <PacmanLoader color="#3b19e3"cssOverride={{display: "inline-flex"}}/>}
       {articles.length > 0 && <ArticleList items={articles} />}
     </div>
   );
