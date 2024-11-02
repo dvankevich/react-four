@@ -19,22 +19,22 @@ const ArticleList = ({ items }) => (
 const App = () => {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     async function fetchArticles() {
       try {
-		// 1. Встановлюємо індикатор в true перед запитом
         setLoading(true);
         const response = await axios.get(
           "https://hn.algolia.com/api/v1/search?query=react"
         );
         setArticles(response.data.hits);
       } catch (error) {
-        // Тут будемо обробляти помилку
         console.log(error);
         
+				// Встановлюємо стан error в true
+        setError(true);
       } finally {
-		// 2. Встановлюємо індикатор в false після запиту
         setLoading(false);
       }
     }
@@ -47,6 +47,9 @@ const App = () => {
       <h1>Latest articles</h1>
       {/* {loading && <p>Loading data, please wait...</p>} */}
       {loading && <PacmanLoader color="#3b19e3"cssOverride={{display: "inline-flex"}}/>}
+      {error && (
+        <p>Whoops, something went wrong! Please try reloading this page!</p>
+      )}
       {articles.length > 0 && <ArticleList items={articles} />}
     </div>
   );
