@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react';
 import axios from "axios";
+import PacmanLoader from "react-spinners/PacmanLoader";
 import './App.css'
 
 const ArticleList = ({ items }) => (
@@ -43,8 +44,11 @@ const App = () => {
 
   return (
     <div>
+      <PacmanLoader color="#3b19e3"/>
+      <p>text</p>
       <h1>Latest articles</h1>
-      {loading && <p>Loading data, please wait...</p>}
+      {/* {loading && <p>Loading data, please wait...</p>} */}
+      {loading && <PacmanLoader color="#3b19e3"/>}
       {articles.length > 0 && <ArticleList items={articles} />}
     </div>
   );
