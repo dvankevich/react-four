@@ -5,6 +5,7 @@ import { fetchArticlesWithTopic } from "./articles-api.js";
 import { SearchForm } from "./components/SearchForm.jsx"
 import PacmanLoader from "react-spinners/PacmanLoader";
 import './App.css'
+import Player from './components/Player.jsx';
 
 const ArticleList = ({ items }) => (
   <ul>
@@ -40,6 +41,10 @@ const App = () => {
   };
 
   return (
+    <>
+    <div>
+      <Player source="http://media.w3.org/2010/05/sintel/trailer.mp4" />;
+    </div>
     <div>
       <SearchForm onSearch={handleSearch} />
       {/* {loading && <p>Loading data, please wait...</p>} */}
@@ -49,6 +54,7 @@ const App = () => {
       )}
       {articles.length > 0 && <ArticleList items={articles} />}
     </div>
+    </>
   );
 };
 
